@@ -1,12 +1,22 @@
 using UnityEngine;
+using Tinuvia.CharacterStats;
 
-public class InventoryManager : MonoBehaviour
+public class Character : MonoBehaviour
 {
+    public CharacterStat Strength;
+    public CharacterStat Agility;
+    public CharacterStat Intelligence;
+    public CharacterStat Vitality;
+
     [SerializeField] Inventory inventory;
     [SerializeField] EquipmentPanel equipmentPanel;
+    [SerializeField] StatPanel statPanel;
 
     private void Awake()
     {
+        statPanel.SetStats(Strength, Agility, Intelligence, Vitality);
+        statPanel.UpdateStatValues();
+
         inventory.OnItemRightClickedEvent += EquipFromInventory;
         equipmentPanel.OnItemRightClickedEvent += UnEquipFromEquipPanel;
     }
@@ -35,13 +45,17 @@ public class InventoryManager : MonoBehaviour
             EquippableItem previousItem;
             if (equipmentPanel.AddItem(item, out previousItem))
             {
-                if (previousItem != null)
-                    // if this slot is occupied
+                if (previousItem != null) // if this slot is occupied, return previous to inventory
                 {
                     inventory.AddItem(previousItem);
+                    previousItem.UnEquip(this);
+                    statPanel.UpdateStatValues();
                 }
+                item.Equip(this);
+                statPanel.UpdateStatValues();
+                    
             }
-            else // if we can't equip it, return to inventory
+            else // if we can't equip it, return new to inventory
             {
                 inventory.AddItem(item);
             }
@@ -52,6 +66,8 @@ public class InventoryManager : MonoBehaviour
     {
         if (!inventory.IsFull() && equipmentPanel.RemoveItem(item))
         {
+            item.UnEquip(this);
+            statPanel.UpdateStatValues();
             inventory.AddItem(item);
         }
     }

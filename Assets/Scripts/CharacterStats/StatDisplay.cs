@@ -10,7 +10,7 @@ public class StatDisplay : MonoBehaviour
     {
         Text[] texts = GetComponentsInChildren<Text>();
         NameText = texts[0];
-        ValueText = texts[0];
+        ValueText = texts[1];
     }
 
 }

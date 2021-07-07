@@ -18,7 +18,7 @@ MonoBehaviour:
   AgilityBonus: 0
   IntelligenceBonus: 0
   VitalityBonus: 0
-  StrengthPercentBonus: 0
+  StrengthPercentBonus: 0.2
   AgilityPercentBonus: 0
   IntelligencePercentBonus: 0
   VitalityPercentBonus: 0
