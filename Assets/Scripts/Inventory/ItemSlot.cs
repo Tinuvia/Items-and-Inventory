@@ -3,12 +3,21 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
     [SerializeField] Image image;
     [SerializeField] ItemTooltip tooltip;
 
-    public event Action<Item> OnRightClickEvent;
+    public event Action<ItemSlot> OnPointerEnterEvent;
+    public event Action<ItemSlot> OnPointerExitEvent;
+    public event Action<ItemSlot> OnRightClickEvent; //need to fix this later - from Item to ItemSlot
+    public event Action<ItemSlot> OnBeginDragEvent;
+    public event Action<ItemSlot> OnEndDragEvent;
+    public event Action<ItemSlot> OnDragEvent;
+    public event Action<ItemSlot> OnDropEvent;
+
+    private Color normalColor = Color.white;
+    private Color disabledColor = new Color(1,1,1,0); // transparent
 
     private Item _item;
     public Item Item
@@ -21,50 +30,66 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 
             if(_item == null)
             {
-                image.enabled = false;
+                image.color = disabledColor;
             }
             else
             {
                 image.sprite = _item.Icon;
-                image.enabled = true;
+                image.color = normalColor;
             }
         }
     }
+
+    // Is only called in the editor, triggers when script is loaded or items changed in editor
+    // In this case it's used to automatically fill in all the images in the slots
+    protected virtual void OnValidate()
+    // protected and virtual so we can override from the Equipment script
+    {
+        if (image == null)
+            image = GetComponent<Image>();
+    }
+
+    public virtual bool CanReceiveItem(Item item)
+    {
+        return true;
+    }
+
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData != null && eventData.button == PointerEventData.InputButton.Right)
         {
-            if (Item != null && OnRightClickEvent != null)
-            {
-                OnRightClickEvent(Item);
-            }
+            OnRightClickEvent?.Invoke(this); 
         }
     }
-
-
-    // Is only called in the editor, triggers when script is loaded or items changed in editor
-    // In this case it's used to automatically fill in all the images in the slots
-    protected virtual void OnValidate()
-        // protected and virtual so we can override from the Equipment script
-    {
-        if(image == null)
-            image = GetComponent<Image>();
-
-        if (tooltip == null)
-            tooltip = FindObjectOfType<ItemTooltip>(); // OK in validate method since is only used in Editor
-    }
-
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (Item is EquippableItem) // we so far only made the tooltip only work for Equippable items
-        {
-            tooltip.ShowTooltip((EquippableItem)Item);
-        }
+        OnPointerEnterEvent?.Invoke(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        tooltip.HideTooltip();
+        OnPointerExitEvent?.Invoke(this);
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        OnBeginDragEvent?.Invoke(this);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        OnEndDragEvent?.Invoke(this);
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        OnDragEvent?.Invoke(this);
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        OnDropEvent?.Invoke(this);
     }
 }
