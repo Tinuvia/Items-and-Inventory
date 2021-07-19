@@ -50,7 +50,7 @@ public class EquippableItem : Item
             c.Vitality.AddModifier(new StatModifier(VitalityPercentBonus, StatModType.PercentMult, this));
     }
 
-    public void UnEquip(Character c)
+    public void Unequip(Character c)
     {
         c.Strength.RemoveAllModifiersFromSource(this);
         c.Agility.RemoveAllModifiersFromSource(this);
