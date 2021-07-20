@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 482ac9afa1a51a242a098623cbc056b5, type: 3}
-  m_Name: Gem
+  m_Name: GemGreen
   m_EditorClassIdentifier: 
-  ItemName: Gem
-  Icon: {fileID: 21300000, guid: 9b8a19b1173ee8c4680ddc0215d996b2, type: 3}
+  ItemName: Green Gem
+  Icon: {fileID: 21300000, guid: 9dfbb9a10b38ad94fa913502d00858ff, type: 3}
