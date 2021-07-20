@@ -7,6 +7,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 {
     [SerializeField] Image image;
     [SerializeField] ItemTooltip tooltip;
+    [SerializeField] Text amountText;
 
     public event Action<ItemSlot> OnPointerEnterEvent;
     public event Action<ItemSlot> OnPointerExitEvent;
@@ -40,6 +41,18 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         }
     }
 
+    private int _amount;
+    public int Amount {
+        get { return _amount; }
+        set {
+            _amount = value;
+            amountText.enabled = _item != null && _item.MaximumStacks > 1 && _amount > 1;
+            if (amountText.enabled) {
+                amountText.text = _amount.ToString();
+            }
+        }
+    }
+
     // Is only called in the editor, triggers when script is loaded or items changed in editor
     // In this case it's used to automatically fill in all the images in the slots
     protected virtual void OnValidate()
@@ -47,6 +60,9 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     {
         if (image == null)
             image = GetComponent<Image>();
+
+        if (amountText == null)
+            amountText = GetComponentInChildren<Text>();
     }
 
     public virtual bool CanReceiveItem(Item item)

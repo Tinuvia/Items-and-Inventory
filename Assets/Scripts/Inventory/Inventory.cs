@@ -52,7 +52,8 @@ public class Inventory : MonoBehaviour, IItemContainer
         for (; (i < startingItems.Count && i < itemSlots.Length); i++)
             //every item in the list is instantiated and gets assigned to an item-slot
         {
-            itemSlots[i].Item = Instantiate(startingItems[i]);
+            itemSlots[i].Item = startingItems[i].GetCopy();
+            itemSlots[i].Amount = 1; // if more than 1 of same is added, they don't stack and leads to an empty slot (no amount counter)
         }
 
         for (; (i < itemSlots.Length); i++)
@@ -66,9 +67,10 @@ public class Inventory : MonoBehaviour, IItemContainer
     {
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (itemSlots[i].Item == null)
+            if (itemSlots[i].Item == null || (itemSlots[i].Item.ID == item.ID && itemSlots[i].Amount < item.MaximumStacks))
             {
                 itemSlots[i].Item = item;
+                itemSlots[i].Amount++;
                 return true;
             }
         }
@@ -81,7 +83,10 @@ public class Inventory : MonoBehaviour, IItemContainer
         {
             if (itemSlots[i].Item == item)
             {
-                itemSlots[i].Item = null;
+                itemSlots[i].Amount--;
+                if (itemSlots[i].Amount == 0) {
+                    itemSlots[i].Item = null;
+                }
                 return true;
             }
         }
@@ -96,7 +101,10 @@ public class Inventory : MonoBehaviour, IItemContainer
             // if there's an item in the slot, compare with our ID
             if (item != null && item.ID == itemID)
             {
-                itemSlots[i].Item = null;
+                itemSlots[i].Amount--;
+                if (itemSlots[i].Amount == 0) {
+                    itemSlots[i].Item = null;
+                }
                 return item;
             }
         }

@@ -15,6 +15,7 @@ public enum EquipmentType
 
 [CreateAssetMenu(fileName = "New Equippable Item", menuName = "Inventory/Equippable Item")]
 
+# region Variables
 public class EquippableItem : Item
 {
     public int StrengthBonus;
@@ -28,6 +29,18 @@ public class EquippableItem : Item
     public float VitalityPercentBonus;
     [Space]
     public EquipmentType EquipmentType;
+
+    #endregion
+
+    public override Item GetCopy()
+    {
+        return Instantiate(this);
+    }
+
+    public override void Destroy()
+    {
+        Destroy(this);
+    }
 
     public void Equip(Character c)
     {

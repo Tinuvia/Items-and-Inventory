@@ -142,8 +142,13 @@ public class Character : MonoBehaviour
 
             // if dropped on replaceable - swap
             Item draggedItem = dragItemSlot.Item;
+            int draggedItemAmount = dragItemSlot.Amount;
+
             dragItemSlot.Item = dropItemSlot.Item;
+            dragItemSlot.Amount = dropItemSlot.Amount;
+
             dropItemSlot.Item = draggedItem;
+            dropItemSlot.Amount = draggedItemAmount;
         }
     }
 
