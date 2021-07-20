@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482ac9afa1a51a242a098623cbc056b5, type: 3}
   m_Name: PotionPoison
   m_EditorClassIdentifier: 
+  id: 2460cbcaaac8e1d4db5f517c2d6842a3
   ItemName: Poison Potion
+  MaximumStacks: 10
   Icon: {fileID: 21300000, guid: 39113c5d84701ec4ebe86b7feb26bdf3, type: 3}

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482ac9afa1a51a242a098623cbc056b5, type: 3}
   m_Name: PotionMagic
   m_EditorClassIdentifier: 
+  id: 4e8063a86118b314b96420fff749c7f3
   ItemName: Mana Potion
+  MaximumStacks: 10
   Icon: {fileID: 21300000, guid: 5c3ac161db7fa5040a26cc9fb26fbde6, type: 3}

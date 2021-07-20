@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482ac9afa1a51a242a098623cbc056b5, type: 3}
   m_Name: GemGreen
   m_EditorClassIdentifier: 
+  id: 7046c96957d2ba34fb4727d94c692cf3
   ItemName: Green Gem
+  MaximumStacks: 10
   Icon: {fileID: 21300000, guid: 9dfbb9a10b38ad94fa913502d00858ff, type: 3}

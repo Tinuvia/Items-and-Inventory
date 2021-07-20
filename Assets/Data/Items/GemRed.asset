@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482ac9afa1a51a242a098623cbc056b5, type: 3}
   m_Name: GemRed
   m_EditorClassIdentifier: 
+  id: 9a1c2cf2393d83a49a710bbb67504fdb
   ItemName: Red Gem
+  MaximumStacks: 10
   Icon: {fileID: 21300000, guid: d1c2a75c450d43c498d5ec0ce1123653, type: 3}
