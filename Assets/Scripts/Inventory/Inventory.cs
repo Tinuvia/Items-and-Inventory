@@ -50,9 +50,9 @@ public class Inventory : MonoBehaviour, IItemContainer
     {
         int i = 0;
         for (; (i < startingItems.Count && i < itemSlots.Length); i++)
-            //every item gets assigned to an item-slot
+            //every item in the list is instantiated and gets assigned to an item-slot
         {
-            itemSlots[i].Item = startingItems[i];
+            itemSlots[i].Item = Instantiate(startingItems[i]);
         }
 
         for (; (i < itemSlots.Length); i++)
@@ -88,6 +88,21 @@ public class Inventory : MonoBehaviour, IItemContainer
         return false;
     }
 
+    public Item RemoveItem(string itemID)
+    {
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            Item item = itemSlots[i].Item;
+            // if there's an item in the slot, compare with our ID
+            if (item != null && item.ID == itemID)
+            {
+                itemSlots[i].Item = null;
+                return item;
+            }
+        }
+        return null;
+    }
+
     public bool IsFull()
     {
         for (int i = 0; i < itemSlots.Length; i++)
@@ -100,25 +115,13 @@ public class Inventory : MonoBehaviour, IItemContainer
         return true;
     }
 
-    public bool ContainsItem(Item item)
-    {
-        for (int i = 0; i < itemSlots.Length; i++)
-        {
-            if (itemSlots[i].Item == item)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public int ItemCount(Item item)
+    public int ItemCount(string itemID)
     {
         int number = 0;
 
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (itemSlots[i].Item == item)
+            if (itemSlots[i].Item.ID == itemID)
             {
                 number++;
             }
