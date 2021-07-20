@@ -2666,3 +2666,49 @@ System memory in use after: 127.8 MB.
 Unloading 34 unused Assets to reduce memory usage. Loaded Objects now: 3134.
 Total: 5.996900 ms (FindLiveObjects: 0.360500 ms CreateObjectMapping: 0.180300 ms MarkObjects: 3.541400 ms  DeleteObjects: 1.913500 ms)
 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001698 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.45 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.127 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.59 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2408 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 130.8 MB.
+System memory in use after: 128.3 MB.
+
+Unloading 34 unused Assets to reduce memory usage. Loaded Objects now: 3147.
+Total: 5.891700 ms (FindLiveObjects: 0.495100 ms CreateObjectMapping: 0.196300 ms MarkObjects: 3.215400 ms  DeleteObjects: 1.983500 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002002 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.47 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.258 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.43 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2389 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 130.4 MB.
+System memory in use after: 127.9 MB.
+
+Unloading 44 unused Assets to reduce memory usage. Loaded Objects now: 3140.
+Total: 4.997700 ms (FindLiveObjects: 0.519600 ms CreateObjectMapping: 0.176000 ms MarkObjects: 2.665100 ms  DeleteObjects: 1.635700 ms)
+
