@@ -11,11 +11,12 @@ public class Character : MonoBehaviour
 
     [SerializeField] Inventory inventory;
     [SerializeField] EquipmentPanel equipmentPanel;
+    [SerializeField] CraftingWindow craftingWindow;
     [SerializeField] StatPanel statPanel;
     [SerializeField] ItemTooltip itemTooltip;
     [SerializeField] Image draggableItem;
 
-    private ItemSlot dragItemSlot;
+    private BaseItemSlot dragItemSlot;
 
 
     private void OnValidate()
@@ -26,7 +27,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         statPanel.SetStats(Strength, Agility, Intelligence, Vitality);
         statPanel.UpdateStatValues();
@@ -38,9 +39,11 @@ public class Character : MonoBehaviour
         // --- Pointer Enter
         inventory.OnPointerEnterEvent += ShowTooltip;
         equipmentPanel.OnPointerEnterEvent += ShowTooltip;
+        craftingWindow.OnPointerEnterEvent += ShowTooltip;
         // --- Pointer Exit
         inventory.OnPointerExitEvent += HideTooltip;
         equipmentPanel.OnPointerExitEvent += HideTooltip;
+        craftingWindow.OnPointerEnterEvent += ShowTooltip;
         // --- Begin Drag
         inventory.OnBeginDragEvent += BeginDrag;
         equipmentPanel.OnBeginDragEvent += BeginDrag;
@@ -55,7 +58,7 @@ public class Character : MonoBehaviour
         equipmentPanel.OnDropEvent += Drop;
     }
 
-    private void Equip(ItemSlot itemSlot)
+    private void Equip(BaseItemSlot itemSlot)
     {
         EquippableItem equippableItem = itemSlot.Item as EquippableItem;
         // since we are now dealing with slots, we have to make sure the item in the slot isn't null
@@ -65,7 +68,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void Unequip(ItemSlot itemSlot)
+    private void Unequip(BaseItemSlot itemSlot)
     {
         EquippableItem equippableItem = itemSlot.Item as EquippableItem;
         // since we are now dealing with slots, we have to make sure the item in the slot isn't null
@@ -75,7 +78,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void ShowTooltip(ItemSlot itemSlot)
+    private void ShowTooltip(BaseItemSlot itemSlot)
     {
         EquippableItem equippableItem = itemSlot.Item as EquippableItem;
         if (equippableItem != null)
@@ -84,13 +87,13 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void HideTooltip(ItemSlot itemSlot)
+    private void HideTooltip(BaseItemSlot itemSlot)
     {
         itemTooltip.HideTooltip();
     }
 
 
-    private void BeginDrag(ItemSlot itemSlot)
+    private void BeginDrag(BaseItemSlot itemSlot)
     {
         if (itemSlot.Item != null)
         {
@@ -101,13 +104,13 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void EndDrag(ItemSlot itemSlot)
+    private void EndDrag(BaseItemSlot itemSlot)
     {
         dragItemSlot = null;
         draggableItem.enabled = false;
     }
 
-    private void Drag(ItemSlot itemSlot)
+    private void Drag(BaseItemSlot itemSlot)
     {
         if (draggableItem.enabled)
         {
@@ -115,7 +118,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void Drop(ItemSlot dropItemSlot)
+    private void Drop(BaseItemSlot dropItemSlot)
     {
         if (dragItemSlot == null) return; //  from tutorial #12, but should probably be old draggedSlot --> renaming all those instances to new dragItemSlot
 
