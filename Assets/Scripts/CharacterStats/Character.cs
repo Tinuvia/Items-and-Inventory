@@ -196,4 +196,10 @@ public class Character : MonoBehaviour
             inventory.AddItem(item);
         }
     }
+
+    // we need a way to access this method (for the stat buff effects) since the statPanel in here is private
+    public void UpdateStatValues()
+    {
+        statPanel.UpdateStatValues();
+    }
 }

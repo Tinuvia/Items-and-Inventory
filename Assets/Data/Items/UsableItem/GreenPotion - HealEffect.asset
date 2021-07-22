@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f3fb0281ec87fe43b39b8f7f9e7c7e7, type: 3}
-  m_Name: GreenPotion - Heal Effect
+  m_Name: GreenPotion - HealEffect
   m_EditorClassIdentifier: 
   HealthAmount: 10

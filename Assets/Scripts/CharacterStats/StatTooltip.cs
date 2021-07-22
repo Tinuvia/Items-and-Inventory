@@ -67,7 +67,7 @@ public class StatTooltip : MonoBehaviour
 
             
 
-            EquippableItemSO item = mod.Source as EquippableItemSO; // if source is not equippable, this returns null
+            ItemSO item = mod.Source as ItemSO; // if source is not equippable, this returns null
 
             if (item != null)
             {
@@ -76,7 +76,7 @@ public class StatTooltip : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Modifier is not an EquippableItem!");
+                Debug.LogError("Modifier is not an Item!");
             }
         }
         return sb.ToString();
