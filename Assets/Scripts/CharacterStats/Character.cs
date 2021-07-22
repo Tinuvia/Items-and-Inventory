@@ -130,37 +130,59 @@ public class Character : MonoBehaviour
     {
         if (dragItemSlot == null) return; //  from tutorial #12, but should probably be old draggedSlot --> renaming all those instances to new dragItemSlot
 
-        if (dropItemSlot.CanReceiveItem(dragItemSlot.Item) && dragItemSlot.CanReceiveItem(dropItemSlot.Item))
+        // adds stacking
+        if (dropItemSlot.CanAddStack(dragItemSlot.Item)) // checking if item is stackable
         {
-            EquippableItemSO dragItem = dragItemSlot.Item as EquippableItemSO;
-            EquippableItemSO dropItem = dropItemSlot.Item as EquippableItemSO;
-
-            if (dragItemSlot is EquipmentSlot)
-            {
-                // we are dragging an item OUT of an equipment slot
-                if (dragItem != null) dragItem.Unequip(this);
-                if (dropItem != null) dropItem.Equip(this);
-            }
-
-            if (dropItemSlot is EquipmentSlot)
-            {
-                // we are dragging an item INTO of an equipment slot
-                if (dragItem != null) dragItem.Equip(this);
-                if (dropItem != null) dropItem.Unequip(this);
-            }
-
-            statPanel.UpdateStatValues();
-
-            // if dropped on replaceable - swap
-            ItemSO draggedItem = dragItemSlot.Item;
-            int draggedItemAmount = dragItemSlot.Amount;
-
-            dragItemSlot.Item = dropItemSlot.Item;
-            dragItemSlot.Amount = dropItemSlot.Amount;
-
-            dropItemSlot.Item = draggedItem;
-            dropItemSlot.Amount = draggedItemAmount;
+            AddStacks(dropItemSlot);
         }
+        // adds swapping (for equipment or other non-stackable items)
+        else if (dropItemSlot.CanReceiveItem(dragItemSlot.Item) && dragItemSlot.CanReceiveItem(dropItemSlot.Item))
+        {
+            SwapItems(dropItemSlot);
+        }
+    }
+
+    private void SwapItems(BaseItemSlot dropItemSlot)
+    {
+        EquippableItemSO dragItem = dragItemSlot.Item as EquippableItemSO;
+        EquippableItemSO dropItem = dropItemSlot.Item as EquippableItemSO;
+
+        if (dragItemSlot is EquipmentSlot)
+        {
+            // we are dragging an item OUT of an equipment slot
+            if (dragItem != null) dragItem.Unequip(this);
+            if (dropItem != null) dropItem.Equip(this);
+        }
+
+        if (dropItemSlot is EquipmentSlot)
+        {
+            // we are dragging an item INTO of an equipment slot
+            if (dragItem != null) dragItem.Equip(this);
+            if (dropItem != null) dropItem.Unequip(this);
+        }
+
+        statPanel.UpdateStatValues();
+
+        // if dropped on replaceable - swap
+        ItemSO draggedItem = dragItemSlot.Item;
+        int draggedItemAmount = dragItemSlot.Amount;
+
+        dragItemSlot.Item = dropItemSlot.Item;
+        dragItemSlot.Amount = dropItemSlot.Amount;
+
+        dropItemSlot.Item = draggedItem;
+        dropItemSlot.Amount = draggedItemAmount;
+    }
+
+    private void AddStacks(BaseItemSlot dropItemSlot)
+    {
+        //Add stacks until dropItemSlot is full
+        int numAddableStacks = dropItemSlot.Item.MaximumStacks - dropItemSlot.Amount;
+        int stacksToAdd = Mathf.Min(numAddableStacks, dragItemSlot.Amount); // we add the smallest amount of the two
+
+        dropItemSlot.Amount += stacksToAdd;
+        //Remove the same number of stacks from dragItemSlot
+        dragItemSlot.Amount -= stacksToAdd;
     }
 
     public void Equip(EquippableItemSO item)

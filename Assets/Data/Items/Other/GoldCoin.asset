@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9eaf9bf12957534c84c114ab632e228, type: 3}
-  m_Name: GreenPotion - AgilityBuffEffect
+  m_Script: {fileID: 11500000, guid: 482ac9afa1a51a242a098623cbc056b5, type: 3}
+  m_Name: GoldCoin
   m_EditorClassIdentifier: 
-  AgilityBuffAmount: 2
-  IntelligenceBuffAmount: 0
-  StrengthBuffAmount: 0
-  VitalityBuffAmount: 0
-  Duration: 5
+  id: 3ac84af3e00d873459e28999de885e4f
+  ItemName: Gold Coin
+  MaximumStacks: 999
+  Icon: {fileID: 21300000, guid: 86d6f4769eeff2d488425423f8edac79, type: 3}
