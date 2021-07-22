@@ -25,6 +25,12 @@ public class CraftingWindow : MonoBehaviour
     void Start()
     {
         Init();
+
+        foreach (CraftingRecipeUI craftingRecipeUI in craftingRecipeUIs)
+        {
+            craftingRecipeUI.OnPointerEnterEvent += (slot) => OnPointerEnterEvent(slot);
+            craftingRecipeUI.OnPointerExitEvent += (slot) => OnPointerExitEvent(slot);
+        }
     }
 
     private void Init()

@@ -22,13 +22,13 @@ public class Inventory : ItemContainer
     {
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            itemSlots[i].OnPointerEnterEvent += OnPointerEnterEvent;
-            itemSlots[i].OnPointerExitEvent += OnPointerExitEvent;
-            itemSlots[i].OnRightClickEvent += OnRightClickEvent;
-            itemSlots[i].OnBeginDragEvent += OnBeginDragEvent;
-            itemSlots[i].OnEndDragEvent += OnEndDragEvent;
-            itemSlots[i].OnDragEvent += OnDragEvent;
-            itemSlots[i].OnDropEvent += OnDropEvent;
+            itemSlots[i].OnPointerEnterEvent += slot => OnPointerEnterEvent(slot);
+            itemSlots[i].OnPointerExitEvent += slot => OnPointerExitEvent(slot);
+            itemSlots[i].OnRightClickEvent += slot => OnRightClickEvent(slot);
+            itemSlots[i].OnBeginDragEvent += slot => OnBeginDragEvent(slot);
+            itemSlots[i].OnEndDragEvent += slot => OnEndDragEvent(slot);
+            itemSlots[i].OnDragEvent += slot => OnDragEvent(slot);
+            itemSlots[i].OnDropEvent += slot => OnDropEvent(slot);
             // add listener to when the ItemSlot scripts event is sent
         }
 
@@ -46,19 +46,10 @@ public class Inventory : ItemContainer
     private void SetStartingItems()
         // matches our itemSlots (UI-element) with our itemList (items)
     {
-        int i = 0;
-        for (; (i < startingItems.Length && i < itemSlots.Length); i++)
-            //every item in the list is instantiated and gets assigned to an item-slot
+        Clear();
+        for (int i = 0; i < startingItems.Length; i++)
         {
-            itemSlots[i].Item = startingItems[i].GetCopy();
-            itemSlots[i].Amount = 1; // if more than 1 of same is added, they don't stack and leads to an empty slot (no amount counter)
-        }
-
-        for (; (i < itemSlots.Length); i++)
-            // for any item-slot that doesn't have an item to go into it, set to null
-        {
-            itemSlots[i].Item = null;
-            itemSlots[i].Amount = 0;
+            AddItem(startingItems[i].GetCopy());
         }
     }
 }

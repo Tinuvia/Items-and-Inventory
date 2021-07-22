@@ -15,6 +15,7 @@ public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
     public event Action<BaseItemSlot> OnPointerExitEvent;
     public event Action<BaseItemSlot> OnRightClickEvent;
 
+    protected bool isPointerOver;
     protected Color normalColor = Color.white;
     protected Color disabledColor = new Color(1, 1, 1, 0); // transparent
 
@@ -25,11 +26,21 @@ public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
         set {
             _item = value;
 
+            if (_item == null && Amount != 0)
+                Amount = 0;
+
             if (_item == null)
                 image.color = disabledColor;
             else {
                 image.sprite = _item.Icon;
                 image.color = normalColor;
+            }
+
+            // re-trigger mouse-over if we already had our mouse over the object 
+            if (isPointerOver)
+            {
+                OnPointerExit(null);
+                OnPointerEnter(null);
             }
         }
     }
@@ -42,7 +53,7 @@ public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
         {
             _amount = value;
             if (_amount < 0) _amount = 0; 
-            if (_amount == 0) Item = null;
+            if (_amount == 0 && Item != null) Item = null;
 
             if (amountText != null)
             {
@@ -66,6 +77,13 @@ public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
             amountText = GetComponentInChildren<Text>();
     }
 
+    // workaround for Unity not registering on mouse-over events on disabled objects
+    protected virtual void OnDisable()
+    {
+        if(isPointerOver)
+            OnPointerExit(null);
+    }
+
     public virtual bool CanReceiveItem(ItemSO item)
     {
         return false;
@@ -87,11 +105,13 @@ public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        isPointerOver = true;
         OnPointerEnterEvent?.Invoke(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        isPointerOver = false;
         OnPointerExitEvent?.Invoke(this);
     }
 }

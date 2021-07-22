@@ -32,8 +32,8 @@ public class CraftingRecipeUI : MonoBehaviour
     {
         foreach (BaseItemSlot itemSlot in itemSlots)
         {
-            itemSlot.OnPointerEnterEvent += OnPointerEnterEvent;
-            itemSlot.OnPointerExitEvent += OnPointerExitEvent;
+            itemSlot.OnPointerEnterEvent += (slot) => OnPointerEnterEvent(slot);
+            itemSlot.OnPointerExitEvent += (slot) => OnPointerExitEvent(slot);
         }        
     }
 

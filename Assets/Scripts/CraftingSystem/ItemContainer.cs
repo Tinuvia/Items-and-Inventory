@@ -13,7 +13,17 @@ public abstract class ItemContainer : MonoBehaviour, IItemContainer
     {
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (itemSlots[i].Item == null || itemSlots[i].CanAddStack(item))
+            if (itemSlots[i].CanAddStack(item))
+            {
+                itemSlots[i].Item = item;
+                itemSlots[i].Amount++;
+                return true;
+            }
+        }
+
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (itemSlots[i].Item == null)
             {
                 itemSlots[i].Item = item;
                 itemSlots[i].Amount++;
@@ -72,9 +82,18 @@ public abstract class ItemContainer : MonoBehaviour, IItemContainer
             ItemSO item = itemSlots[i].Item;
             if (item != null && item.ID == itemID)
             {
-                number++;
+                // #15 need to not only increase by 1, but take stacking into account
+                number += itemSlots[i].Amount;
             }
         }
         return number;
+    }
+
+    public virtual void Clear()
+    {
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            itemSlots[i].Item = null;
+        }
     }
 }

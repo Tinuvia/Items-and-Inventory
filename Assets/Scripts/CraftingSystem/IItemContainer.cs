@@ -7,4 +7,5 @@ public interface IItemContainer
     bool RemoveItem(ItemSO item);
     bool AddItem(ItemSO item);
     bool IsFull();
+    void Clear();
 }
