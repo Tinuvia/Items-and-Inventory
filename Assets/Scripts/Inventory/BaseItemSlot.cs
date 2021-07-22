@@ -18,8 +18,8 @@ public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
     protected Color normalColor = Color.white;
     protected Color disabledColor = new Color(1, 1, 1, 0); // transparent
 
-    protected Item _item;
-    public Item Item {
+    protected ItemSO _item;
+    public ItemSO Item {
         get { return _item; }
         // use the setter to update the item's image - if the item is null the slot is empty and the image should be disabled
         set {
@@ -61,7 +61,7 @@ public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
             amountText = GetComponentInChildren<Text>();
     }
 
-    public virtual bool CanReceiveItem(Item item)
+    public virtual bool CanReceiveItem(ItemSO item)
     {
         return false;
     }

@@ -5,12 +5,12 @@ using UnityEngine;
 [Serializable]
 public struct ItemAmount
 {
-    public Item Item;
+    public ItemSO Item;
     [Range(1,999)]
     public int Amount;
 }
 
-[CreateAssetMenu(fileName = "New Recipe", menuName = "Inventory/Recipe")]
+[CreateAssetMenu(fileName = "New Recipe", menuName = "Inventory/Recipes/Recipe")]
 public class CraftingRecipeSO : ScriptableObject
 {
     public List<ItemAmount> Materials;
@@ -36,7 +36,7 @@ public class CraftingRecipeSO : ScriptableObject
             {
                 for (int i = 0; i < itemAmount.Amount; i++)
                 {
-                    Item oldItem = itemContainer.RemoveItem(itemAmount.Item.ID);
+                    ItemSO oldItem = itemContainer.RemoveItem(itemAmount.Item.ID);
                     oldItem.Destroy();
                 }
             }

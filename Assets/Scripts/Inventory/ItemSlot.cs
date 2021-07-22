@@ -12,7 +12,7 @@ public class ItemSlot : BaseItemSlot, IBeginDragHandler, IEndDragHandler, IDragH
 
     private Color dragColor = new Color(1,1,1,0.5f); // semi-transparent
 
-    public override bool CanReceiveItem(Item item)
+    public override bool CanReceiveItem(ItemSO item)
     {
         return true;
     }

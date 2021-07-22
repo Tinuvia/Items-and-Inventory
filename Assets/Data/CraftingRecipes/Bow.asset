@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bow
   m_EditorClassIdentifier: 
   Materials:
-  - Item: {fileID: 11400000, guid: 2460cbcaaac8e1d4db5f517c2d6842a3, type: 2}
+  - Item: {fileID: 11400000, guid: 9a1c2cf2393d83a49a710bbb67504fdb, type: 2}
     Amount: 1
   Results:
   - Item: {fileID: 11400000, guid: 3fe4b2a1df74c12498914335a5d97ceb, type: 2}

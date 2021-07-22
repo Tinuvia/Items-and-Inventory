@@ -225,6 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c797ab4b0c118944383672ec2dad7d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 50
   Strength:
     BaseValue: 3
   Agility:
@@ -2471,7 +2472,7 @@ GameObject:
   - component: {fileID: 8693921551265740756}
   - component: {fileID: 8693921551265740757}
   m_Layer: 5
-  m_Name: ItemStatText
+  m_Name: ItemDescriptionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4658,8 +4659,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemNameText: {fileID: 8693921551525695455}
-  ItemSlotText: {fileID: 8693921552262522385}
-  ItemStatsText: {fileID: 8693921551265740757}
+  ItemTypeText: {fileID: 8693921552262522385}
+  ItemDescriptionText: {fileID: 8693921551265740757}
 --- !u!1 &8693921551910858373
 GameObject:
   m_ObjectHideFlags: 0
@@ -5940,7 +5941,7 @@ GameObject:
   - component: {fileID: 8693921552262522384}
   - component: {fileID: 8693921552262522385}
   m_Layer: 5
-  m_Name: ItemSlotText
+  m_Name: ItemTypeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

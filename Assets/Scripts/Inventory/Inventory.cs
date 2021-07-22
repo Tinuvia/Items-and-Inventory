@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 public class Inventory : ItemContainer
 {
     [FormerlySerializedAs("items")]
-    [SerializeField] Item[] startingItems;
+    [SerializeField] ItemSO[] startingItems;
     [SerializeField] Transform itemsParent;
 
     // same events in Inventory, EquipmentPanel and ItemSlot - to facilitate later in Character class

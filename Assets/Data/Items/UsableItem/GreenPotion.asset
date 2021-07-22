@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 482ac9afa1a51a242a098623cbc056b5, type: 3}
-  m_Name: PotionHealth
+  m_Script: {fileID: 11500000, guid: 4dc8e698fb0cc8c45b9c4a37c6ad229b, type: 3}
+  m_Name: GreenPotion
   m_EditorClassIdentifier: 
-  id: 5e1ab89d411f3ef4f80f78f989432e6e
-  ItemName: Health Potion
-  MaximumStacks: 10
+  id: b63ef57bf8d711f4d8f5b193384ab38d
+  ItemName: Green Potion
+  MaximumStacks: 20
   Icon: {fileID: 21300000, guid: 951e21d1e4620fc498a3fcc7f7ab2102, type: 3}
+  IsConsumable: 1
+  Effects:
+  - {fileID: 11400000, guid: 029b371b7f70dc3409acf96bbd0fd4d8, type: 2}

@@ -13,11 +13,12 @@ public enum EquipmentType
     Accessory2,
 }
 
-[CreateAssetMenu(fileName = "New Equippable Item", menuName = "Inventory/Equippable Item")]
+[CreateAssetMenu(fileName = "New Equippable Item", menuName = "Inventory/Items/Equippable Item")]
 
-# region Variables
-public class EquippableItem : Item
+
+public class EquippableItemSO : ItemSO
 {
+    # region Variables
     public int StrengthBonus;
     public int AgilityBonus;
     public int IntelligenceBonus;
@@ -32,7 +33,7 @@ public class EquippableItem : Item
 
     #endregion
 
-    public override Item GetCopy()
+    public override ItemSO GetCopy()
     {
         return Instantiate(this);
     }
@@ -69,5 +70,49 @@ public class EquippableItem : Item
         c.Agility.RemoveAllModifiersFromSource(this);
         c.Intelligence.RemoveAllModifiersFromSource(this);
         c.Vitality.RemoveAllModifiersFromSource(this);
+    }
+
+    public override string GetItemType()
+    {
+        return EquipmentType.ToString();
+    }
+
+    public override string GetDescription()
+    {
+        sb.Length = 0;
+        AddStat(StrengthBonus, "Strength");
+        AddStat(IntelligenceBonus, "Intelligence");
+        AddStat(AgilityBonus, "Agility");
+        AddStat(VitalityBonus, "Vitality");
+
+        AddStat(StrengthPercentBonus, "Strength", isPercent: true);
+        AddStat(IntelligencePercentBonus, "Intelligence", isPercent: true);
+        AddStat(AgilityPercentBonus, "Agility", isPercent: true);
+        AddStat(VitalityPercentBonus, "Vitality", isPercent: true);
+
+        return sb.ToString();
+    }
+
+    private void AddStat(float value, string statName, bool isPercent = false)
+    {
+        if (value != 0) // check that the value isn't empty
+        {
+            if (sb.Length > 0)
+                sb.AppendLine(); // for all but first, start on new line
+            if (value > 0)
+                sb.Append("+"); // add plus sign if the value is positive
+
+            if (isPercent)
+            {
+                sb.Append(value * 100);
+                sb.Append("% ");
+            }
+            else
+            {
+                sb.Append(value);
+                sb.Append(" ");
+            }
+            sb.Append(statName);
+        }
     }
 }

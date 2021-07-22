@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
+    public int Health = 50;  
+
     public CharacterStat Strength;
     public CharacterStat Agility;
     public CharacterStat Intelligence;
@@ -34,8 +36,8 @@ public class Character : MonoBehaviour
 
         // Setup Events;
         // --- Right Click
-        inventory.OnRightClickEvent += Equip;
-        equipmentPanel.OnRightClickEvent += Unequip;
+        inventory.OnRightClickEvent += InventoryRightClick;
+        equipmentPanel.OnRightClickEvent += EquipmentPanelRightClick;
         // --- Pointer Enter
         inventory.OnPointerEnterEvent += ShowTooltip;
         equipmentPanel.OnPointerEnterEvent += ShowTooltip;
@@ -58,32 +60,38 @@ public class Character : MonoBehaviour
         equipmentPanel.OnDropEvent += Drop;
     }
 
-    private void Equip(BaseItemSlot itemSlot)
+    private void InventoryRightClick(BaseItemSlot itemSlot)
     {
-        EquippableItem equippableItem = itemSlot.Item as EquippableItem;
-        // since we are now dealing with slots, we have to make sure the item in the slot isn't null
-        if (equippableItem != null)
+        if (itemSlot.Item is EquippableItemSO)
         {
-            Equip(equippableItem);
+            Equip((EquippableItemSO)itemSlot.Item);
+        }
+        else if (itemSlot.Item is UsableItemSO)
+        {
+            UsableItemSO usableItem = (UsableItemSO)itemSlot.Item;
+            usableItem.Use(this);
+
+            if (usableItem.IsConsumable)
+            {
+                inventory.RemoveItem(usableItem);
+                usableItem.Destroy();
+            }
         }
     }
 
-    private void Unequip(BaseItemSlot itemSlot)
+    private void EquipmentPanelRightClick(BaseItemSlot itemSlot)
     {
-        EquippableItem equippableItem = itemSlot.Item as EquippableItem;
-        // since we are now dealing with slots, we have to make sure the item in the slot isn't null
-        if (equippableItem != null)
+        if (itemSlot.Item is EquippableItemSO)
         {
-            Unequip(equippableItem);
+            Unequip((EquippableItemSO)itemSlot.Item);
         }
     }
 
     private void ShowTooltip(BaseItemSlot itemSlot)
     {
-        EquippableItem equippableItem = itemSlot.Item as EquippableItem;
-        if (equippableItem != null)
+        if (itemSlot.Item != null)
         {
-            itemTooltip.ShowTooltip(equippableItem);
+            itemTooltip.ShowTooltip(itemSlot.Item);
         }
     }
 
@@ -124,8 +132,8 @@ public class Character : MonoBehaviour
 
         if (dropItemSlot.CanReceiveItem(dragItemSlot.Item) && dragItemSlot.CanReceiveItem(dropItemSlot.Item))
         {
-            EquippableItem dragItem = dragItemSlot.Item as EquippableItem;
-            EquippableItem dropItem = dropItemSlot.Item as EquippableItem;
+            EquippableItemSO dragItem = dragItemSlot.Item as EquippableItemSO;
+            EquippableItemSO dropItem = dropItemSlot.Item as EquippableItemSO;
 
             if (dragItemSlot is EquipmentSlot)
             {
@@ -144,7 +152,7 @@ public class Character : MonoBehaviour
             statPanel.UpdateStatValues();
 
             // if dropped on replaceable - swap
-            Item draggedItem = dragItemSlot.Item;
+            ItemSO draggedItem = dragItemSlot.Item;
             int draggedItemAmount = dragItemSlot.Amount;
 
             dragItemSlot.Item = dropItemSlot.Item;
@@ -155,11 +163,11 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void Equip(EquippableItem item)
+    public void Equip(EquippableItemSO item)
     {
         if (inventory.RemoveItem(item))
         {
-            EquippableItem previousItem;
+            EquippableItemSO previousItem;
             if (equipmentPanel.AddItem(item, out previousItem))
             {
                 if (previousItem != null) // if this slot is occupied, return previous to inventory
@@ -179,7 +187,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void Unequip(EquippableItem item)
+    public void Unequip(EquippableItemSO item)
     {
         if (!inventory.IsFull() && equipmentPanel.RemoveItem(item))
         {

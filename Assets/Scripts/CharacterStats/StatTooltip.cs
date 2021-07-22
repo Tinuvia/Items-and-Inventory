@@ -67,7 +67,7 @@ public class StatTooltip : MonoBehaviour
 
             
 
-            EquippableItem item = mod.Source as EquippableItem; // if source is not equippable, this returns null
+            EquippableItemSO item = mod.Source as EquippableItemSO; // if source is not equippable, this returns null
 
             if (item != null)
             {

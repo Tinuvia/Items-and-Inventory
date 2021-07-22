@@ -33,14 +33,14 @@ public class EquipmentPanel : MonoBehaviour
         equipmentSlots = equipmentSlotsParent.GetComponentsInChildren<EquipmentSlot>();
     }
 
-    public bool AddItem(EquippableItem item, out EquippableItem previousItem)
+    public bool AddItem(EquippableItemSO item, out EquippableItemSO previousItem)
         // using out parameter, since we want both the bool and the item
     {
         for (int i = 0; i < equipmentSlots.Length; i++)
         {
             if (equipmentSlots[i].EquipmentType == item.EquipmentType)
             {
-                previousItem = (EquippableItem)equipmentSlots[i].Item;
+                previousItem = (EquippableItemSO)equipmentSlots[i].Item;
                 equipmentSlots[i].Item = item;
                 return true;
             }
@@ -49,7 +49,7 @@ public class EquipmentPanel : MonoBehaviour
         return false;
     }
 
-    public bool RemoveItem(EquippableItem item)
+    public bool RemoveItem(EquippableItemSO item)
     {
         for (int i = 0; i < equipmentSlots.Length; i++)
         {

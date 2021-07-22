@@ -9,7 +9,7 @@ public abstract class ItemContainer : MonoBehaviour, IItemContainer
 {
     [SerializeField] protected ItemSlot[] itemSlots;
 
-    public virtual bool AddItem(Item item)
+    public virtual bool AddItem(ItemSO item)
     {
         for (int i = 0; i < itemSlots.Length; i++)
         {
@@ -23,7 +23,7 @@ public abstract class ItemContainer : MonoBehaviour, IItemContainer
         return false;
     }
     
-    public virtual bool RemoveItem(Item item)
+    public virtual bool RemoveItem(ItemSO item)
     {
         for (int i = 0; i < itemSlots.Length; i++)
         {
@@ -40,11 +40,11 @@ public abstract class ItemContainer : MonoBehaviour, IItemContainer
         return false;
     }
     
-    public virtual Item RemoveItem(string itemID)
+    public virtual ItemSO RemoveItem(string itemID)
     {
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            Item item = itemSlots[i].Item;
+            ItemSO item = itemSlots[i].Item;
             // if there's an item in the slot, compare with our ID
             if (item != null && item.ID == itemID)
             {
@@ -77,7 +77,7 @@ public abstract class ItemContainer : MonoBehaviour, IItemContainer
 
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            Item item = itemSlots[i].Item;
+            ItemSO item = itemSlots[i].Item;
             if (item != null && item.ID == itemID)
             {
                 number++;
