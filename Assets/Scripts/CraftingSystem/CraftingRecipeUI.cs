@@ -39,23 +39,7 @@ public class CraftingRecipeUI : MonoBehaviour
 
     public void OnCraftButtonClick()
     {
-        if (craftingRecipe != null && ItemContainer != null)
-        {
-            if (craftingRecipe.CanCraft(ItemContainer))
-            {
-                if (!ItemContainer.IsFull())
-                {
-                    craftingRecipe.Craft(ItemContainer);
-                } else
-                {
-                    Debug.LogError("Inventory is full!");
-                }
-            }
-            else
-            {
-                Debug.LogError("You don't have the reqired materials!");
-            }
-        }
+        craftingRecipe.Craft(ItemContainer);
     }
 
     private void SetCraftingRecipe(CraftingRecipeSO newCraftingRecipe)

@@ -18,10 +18,29 @@ public class CraftingRecipeSO : ScriptableObject
 
     public bool CanCraft(IItemContainer itemContainer)
     {
+        return HasMaterials(itemContainer) && HasSpace(itemContainer);
+    }
+
+    private bool HasSpace(IItemContainer itemContainer)
+    {
+        foreach (ItemAmount itemAmount in Results)
+        {
+            if (!itemContainer.CanAddItem(itemAmount.Item, itemAmount.Amount))
+            {
+                Debug.LogWarning("Your inventory is full.");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private bool HasMaterials(IItemContainer itemContainer)
+    {
         foreach (ItemAmount itemAmount in Materials)
         {
-            if(itemContainer.ItemCount(itemAmount.Item.ID) < itemAmount.Amount)
+            if (itemContainer.ItemCount(itemAmount.Item.ID) < itemAmount.Amount)
             {
+                Debug.LogWarning("You don't have the required materials.");
                 return false;
             }
         }
@@ -32,22 +51,31 @@ public class CraftingRecipeSO : ScriptableObject
     {
         if (CanCraft(itemContainer))
         {
-            foreach (ItemAmount itemAmount in Materials)
-            {
-                for (int i = 0; i < itemAmount.Amount; i++)
-                {
-                    ItemSO oldItem = itemContainer.RemoveItem(itemAmount.Item.ID);
-                    oldItem.Destroy();
-                }
-            }
+            RemoveMaterials(itemContainer);
+            AddResults(itemContainer);
+        }
+    }
 
-            foreach (ItemAmount itemAmount in Results)
+    private void RemoveMaterials(IItemContainer itemContainer)
+    {
+        foreach (ItemAmount itemAmount in Materials)
+        {
+            for (int i = 0; i < itemAmount.Amount; i++)
             {
-                for (int i = 0; i < itemAmount.Amount; i++)
-                {
-                    itemContainer.AddItem(itemAmount.Item.GetCopy());
-                }
+                ItemSO oldItem = itemContainer.RemoveItem(itemAmount.Item.ID);
+                oldItem.Destroy();
             }
         }
-    }    
+    }
+    
+    private void AddResults(IItemContainer itemContainer)
+    {
+        foreach (ItemAmount itemAmount in Results)
+        {
+            for (int i = 0; i < itemAmount.Amount; i++)
+            {
+                itemContainer.AddItem(itemAmount.Item.GetCopy());
+            }
+        }
+    }
 }
