@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,14 +31,15 @@ public class CraftingRecipeUI : MonoBehaviour
     {
         foreach (BaseItemSlot itemSlot in itemSlots)
         {
-            itemSlot.OnPointerEnterEvent += (slot) => OnPointerEnterEvent(slot);
-            itemSlot.OnPointerExitEvent += (slot) => OnPointerExitEvent(slot);
+            itemSlot.OnPointerEnterEvent += slot => OnPointerEnterEvent(slot);
+            itemSlot.OnPointerExitEvent += slot => OnPointerExitEvent(slot);
         }        
     }
 
     public void OnCraftButtonClick()
     {
-        craftingRecipe.Craft(ItemContainer);
+        if (craftingRecipe != null && ItemContainer != null)
+            craftingRecipe.Craft(ItemContainer);
     }
 
     private void SetCraftingRecipe(CraftingRecipeSO newCraftingRecipe)

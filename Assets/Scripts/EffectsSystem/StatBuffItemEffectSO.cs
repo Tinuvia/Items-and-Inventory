@@ -15,9 +15,9 @@ public class StatBuffItemEffectSO : UsableItemEffectSO
     {
         StatModifier statModifier = (new StatModifier(AgilityBuffAmount, StatModType.Flat, parentItem));
         character.Agility.AddModifier(statModifier);
+        character.UpdateStatValues();
         // Coroutines need to be run on Monobehaviors, the only one we have access to is the character
         character.StartCoroutine(RemoveBuff(character, statModifier, Duration));
-        character.UpdateStatValues();
     }
 
     public override string GetDescription()

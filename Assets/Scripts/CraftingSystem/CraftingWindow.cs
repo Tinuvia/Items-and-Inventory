@@ -21,15 +21,14 @@ public class CraftingWindow : MonoBehaviour
         Init();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         Init();
 
         foreach (CraftingRecipeUI craftingRecipeUI in craftingRecipeUIs)
         {
-            craftingRecipeUI.OnPointerEnterEvent += (slot) => OnPointerEnterEvent(slot);
-            craftingRecipeUI.OnPointerExitEvent += (slot) => OnPointerExitEvent(slot);
+            craftingRecipeUI.OnPointerEnterEvent += slot => OnPointerEnterEvent(slot);
+            craftingRecipeUI.OnPointerExitEvent += slot => OnPointerExitEvent(slot);
         }
     }
 

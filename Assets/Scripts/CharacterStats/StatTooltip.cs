@@ -10,12 +10,16 @@ public class StatTooltip : MonoBehaviour
     [SerializeField] Text StatModifiersText;
 
     private StringBuilder sb = new StringBuilder(); // allows us to not use a new string every time we concatenate texts
+    
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
 
     public void ShowTooltip(CharacterStat stat, string statName)
     {
         StatNameText.text = GetStatTopText(stat, statName);
         StatModifiersText.text = GetStatModifiersText(stat);
-
         gameObject.SetActive(true);
     }
 

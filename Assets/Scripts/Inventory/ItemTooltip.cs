@@ -7,6 +7,11 @@ public class ItemTooltip : MonoBehaviour
     [SerializeField] Text ItemTypeText;
     [SerializeField] Text ItemDescriptionText;
 
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void ShowTooltip(ItemSO item)
     {
         ItemNameText.text = item.ItemName;

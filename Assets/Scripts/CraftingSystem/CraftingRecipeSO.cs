@@ -21,19 +21,6 @@ public class CraftingRecipeSO : ScriptableObject
         return HasMaterials(itemContainer) && HasSpace(itemContainer);
     }
 
-    private bool HasSpace(IItemContainer itemContainer)
-    {
-        foreach (ItemAmount itemAmount in Results)
-        {
-            if (!itemContainer.CanAddItem(itemAmount.Item, itemAmount.Amount))
-            {
-                Debug.LogWarning("Your inventory is full.");
-                return false;
-            }
-        }
-        return true;
-    }
-
     private bool HasMaterials(IItemContainer itemContainer)
     {
         foreach (ItemAmount itemAmount in Materials)
@@ -41,6 +28,19 @@ public class CraftingRecipeSO : ScriptableObject
             if (itemContainer.ItemCount(itemAmount.Item.ID) < itemAmount.Amount)
             {
                 Debug.LogWarning("You don't have the required materials.");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private bool HasSpace(IItemContainer itemContainer)
+    {
+        foreach (ItemAmount itemAmount in Results)
+        {
+            if (!itemContainer.CanAddItem(itemAmount.Item, itemAmount.Amount))
+            {
+                Debug.LogWarning("Your inventory is full.");
                 return false;
             }
         }

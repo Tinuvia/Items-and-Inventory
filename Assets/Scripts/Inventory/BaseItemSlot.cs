@@ -29,9 +29,10 @@ public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
             if (_item == null && Amount != 0)
                 Amount = 0;
 
-            if (_item == null)
+            if (_item == null) {
+                image.sprite = null;
                 image.color = disabledColor;
-            else {
+            } else {
                 image.sprite = _item.Icon;
                 image.color = normalColor;
             }
@@ -65,6 +66,16 @@ public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
         }
     }
 
+    public virtual bool CanAddStack(ItemSO item, int amount = 1)
+    {
+        return ((Item != null) && (Item.ID == item.ID));
+    }
+
+    public virtual bool CanReceiveItem(ItemSO item)
+    {
+        return false;
+    }
+
     // Is only called in the editor, triggers when script is loaded or items changed in editor
     // In this case it's used to automatically fill in all the images in the slots
     protected virtual void OnValidate()
@@ -75,6 +86,9 @@ public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
 
         if (amountText == null)
             amountText = GetComponentInChildren<Text>();
+
+        Item = _item;
+        Amount = _amount;
     }
 
     // workaround for Unity not registering on mouse-over events on disabled objects
@@ -84,34 +98,35 @@ public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
             OnPointerExit(null);
     }
 
-    public virtual bool CanReceiveItem(ItemSO item)
-    {
-        return false;
-    }
-    
-    public virtual bool CanAddStack(ItemSO item, int amount = 1)
-    {
-        return (Item != null) && (Item.ID == item.ID);
-    }
-
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData != null && eventData.button == PointerEventData.InputButton.Right)
         {
-            OnRightClickEvent?.Invoke(this);
+            if (OnRightClickEvent != null)
+            {
+                OnRightClickEvent(this);
+            }
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         isPointerOver = true;
-        OnPointerEnterEvent?.Invoke(this);
+
+        if (OnPointerEnterEvent != null)
+        {
+            OnPointerEnterEvent(this);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         isPointerOver = false;
-        OnPointerExitEvent?.Invoke(this);
+
+        if (OnPointerExitEvent != null)
+        {
+            OnPointerExitEvent(this);
+        } 
     }
 }
