@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ItemSaveManager : MonoBehaviour
 {
+    [SerializeField] ItemDatabaseSO itemDatabase;
+
     private const string InventoryFileName = "Inventory";
     private const string EquipmentFileName = "Equipment";
 
@@ -24,7 +26,7 @@ public class ItemSaveManager : MonoBehaviour
                 itemSlot.Amount = 0;
             } else
             {
-                // itemSlot.Item = ;
+                itemSlot.Item = itemDatabase.GetItemCopy(savedSlot.ItemID); // these are new items
                 itemSlot.Amount = savedSlot.Amount;
             }
         }
@@ -41,7 +43,7 @@ public class ItemSaveManager : MonoBehaviour
                 continue;
             }
 
-            ItemSO item = null; //will fix next episode
+            ItemSO item = itemDatabase.GetItemCopy(savedSlot.ItemID);
             character.Inventory.AddItem(item); // temporary workaround, since Equip only takes the item from the inventory
             character.Equip((EquippableItemSO)item);
         }

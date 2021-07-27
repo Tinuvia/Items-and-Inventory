@@ -14,9 +14,9 @@ public class Inventory : ItemContainer
         SetStartingItems();
     }
 
-    protected override void Start() // overrides the method from the base class ItemContainer
+    protected override void Awake() // overrides the method from the base class ItemContainer
     {
-        base.Start(); // assigns the listeners to events
+        base.Awake(); // assigns the listeners to events
         SetStartingItems();
     }
        

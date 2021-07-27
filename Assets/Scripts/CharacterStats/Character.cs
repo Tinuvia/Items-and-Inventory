@@ -14,12 +14,14 @@ public class Character : MonoBehaviour
 
     public Inventory Inventory;
     public EquipmentPanel EquipmentPanel;
+
     [SerializeField] CraftingWindow craftingWindow;
     [SerializeField] StatPanel statPanel;
     [SerializeField] ItemTooltip itemTooltip;
     [SerializeField] Image draggableItem;
     [SerializeField] DropItemArea dropItemArea;
     [SerializeField] QuestionDialogue questionDialogue;
+    [SerializeField] ItemSaveManager itemSaveManager;
 
     private BaseItemSlot dragItemSlot;
 
@@ -62,6 +64,15 @@ public class Character : MonoBehaviour
         Inventory.OnDropEvent += Drop;
         EquipmentPanel.OnDropEvent += Drop;
         dropItemArea.OnDropEvent += DropItemOutsideUI;
+
+        itemSaveManager.LoadEquipment(this);
+        itemSaveManager.LoadInventory(this);
+    }
+
+    private void OnDestroy()
+    {
+        itemSaveManager.SaveEquipment(this);
+        itemSaveManager.SaveInventory(this);
     }
 
     private void InventoryRightClick(BaseItemSlot itemSlot)
@@ -294,10 +305,6 @@ public class Character : MonoBehaviour
         itemContainer.OnDragEvent -= Drag;
         itemContainer.OnDropEvent -= Drop;
     }
-
-
-
-
     
     // we need a way to access this method (for the stat buff effects) since the statPanel in here is private
     public void UpdateStatValues()

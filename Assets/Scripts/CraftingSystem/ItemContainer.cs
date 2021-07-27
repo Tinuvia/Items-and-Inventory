@@ -25,7 +25,7 @@ public abstract class ItemContainer : MonoBehaviour, IItemContainer
         GetComponentsInChildren(includeInactive: true, result: ItemSlots);
     }
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         for (int i = 0; i < ItemSlots.Count; i++)
         {

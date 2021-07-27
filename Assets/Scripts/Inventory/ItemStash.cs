@@ -24,9 +24,9 @@ public class ItemStash : ItemContainer
         spriteRenderer.enabled = false;
     }
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         itemsParent.gameObject.SetActive(false);
     }
 

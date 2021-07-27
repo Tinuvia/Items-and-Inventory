@@ -10,11 +10,11 @@ public class InfiniteInventory : Inventory
         set { SetMaxSlots(value); }
     }
 
-    protected override void Start()
+    protected override void Awake()
         // we can't use OnValidate() since Unity doesn't like calling Destroy in OnValidate
     {
         SetMaxSlots(maxSlots); // must be assigned before the general Start() with its assignments
-        base.Start();
+        base.Awake();
     }
 
     private void SetMaxSlots(int value)
