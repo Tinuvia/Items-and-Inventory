@@ -40,7 +40,7 @@ public class CraftingRecipeSO : ScriptableObject
         {
             if (!itemContainer.CanAddItem(itemAmount.Item, itemAmount.Amount))
             {
-                Debug.LogWarning("Your inventory is full.");
+                Debug.LogWarning("Your Inventory is full.");
                 return false;
             }
         }

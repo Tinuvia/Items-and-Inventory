@@ -12,8 +12,8 @@ public class Character : MonoBehaviour
     public CharacterStat Intelligence;
     public CharacterStat Vitality;
 
-    [SerializeField] Inventory inventory;
-    [SerializeField] EquipmentPanel equipmentPanel;
+    public Inventory Inventory;
+    public EquipmentPanel EquipmentPanel;
     [SerializeField] CraftingWindow craftingWindow;
     [SerializeField] StatPanel statPanel;
     [SerializeField] ItemTooltip itemTooltip;
@@ -39,28 +39,28 @@ public class Character : MonoBehaviour
 
         // Setup Events;
         // --- Right Click
-        inventory.OnRightClickEvent += InventoryRightClick;
-        equipmentPanel.OnRightClickEvent += EquipmentPanelRightClick;
+        Inventory.OnRightClickEvent += InventoryRightClick;
+        EquipmentPanel.OnRightClickEvent += EquipmentPanelRightClick;
         // --- Pointer Enter
-        inventory.OnPointerEnterEvent += ShowTooltip;
-        equipmentPanel.OnPointerEnterEvent += ShowTooltip;
+        Inventory.OnPointerEnterEvent += ShowTooltip;
+        EquipmentPanel.OnPointerEnterEvent += ShowTooltip;
         craftingWindow.OnPointerEnterEvent += ShowTooltip;
         // --- Pointer Exit
-        inventory.OnPointerExitEvent += HideTooltip;
-        equipmentPanel.OnPointerExitEvent += HideTooltip;
+        Inventory.OnPointerExitEvent += HideTooltip;
+        EquipmentPanel.OnPointerExitEvent += HideTooltip;
         craftingWindow.OnPointerExitEvent += HideTooltip;
         // --- Begin Drag
-        inventory.OnBeginDragEvent += BeginDrag;
-        equipmentPanel.OnBeginDragEvent += BeginDrag;
+        Inventory.OnBeginDragEvent += BeginDrag;
+        EquipmentPanel.OnBeginDragEvent += BeginDrag;
         // --- End Drag
-        inventory.OnEndDragEvent += EndDrag;
-        equipmentPanel.OnEndDragEvent += EndDrag;
+        Inventory.OnEndDragEvent += EndDrag;
+        EquipmentPanel.OnEndDragEvent += EndDrag;
         // --- Drag
-        inventory.OnDragEvent += Drag;
-        equipmentPanel.OnDragEvent += Drag;
+        Inventory.OnDragEvent += Drag;
+        EquipmentPanel.OnDragEvent += Drag;
         // --- Drop
-        inventory.OnDropEvent += Drop;
-        equipmentPanel.OnDropEvent += Drop;
+        Inventory.OnDropEvent += Drop;
+        EquipmentPanel.OnDropEvent += Drop;
         dropItemArea.OnDropEvent += DropItemOutsideUI;
     }
 
@@ -207,14 +207,14 @@ public class Character : MonoBehaviour
 
     public void Equip(EquippableItemSO item)
     {
-        if (inventory.RemoveItem(item))
+        if (Inventory.RemoveItem(item))
         {
             EquippableItemSO previousItem;
-            if (equipmentPanel.AddItem(item, out previousItem))
+            if (EquipmentPanel.AddItem(item, out previousItem))
             {
                 if (previousItem != null) // if this slot is occupied, return previous to inventory
                 {
-                    inventory.AddItem(previousItem);
+                    Inventory.AddItem(previousItem);
                     previousItem.Unequip(this);
                     statPanel.UpdateStatValues();
                 }
@@ -224,18 +224,18 @@ public class Character : MonoBehaviour
             }
             else // if we can't equip it, return new to inventory
             {
-                inventory.AddItem(item);
+                Inventory.AddItem(item);
             }
         }
     }
 
     public void Unequip(EquippableItemSO item)
     {
-        if (inventory.CanAddItem(item) && equipmentPanel.RemoveItem(item))
+        if (Inventory.CanAddItem(item) && EquipmentPanel.RemoveItem(item))
         {
             item.Unequip(this);
             statPanel.UpdateStatValues();
-            inventory.AddItem(item);
+            Inventory.AddItem(item);
         }
     }
 
@@ -246,7 +246,7 @@ public class Character : MonoBehaviour
         ItemSO item = itemSlot.Item;
         if (item != null && openItemContainer.CanAddItem(item))
         {
-            inventory.RemoveItem(item);
+            Inventory.RemoveItem(item);
             openItemContainer.AddItem(item);
         }
     }
@@ -254,10 +254,10 @@ public class Character : MonoBehaviour
     private void TransferToInventory(BaseItemSlot itemSlot)
     {
         ItemSO item = itemSlot.Item;
-        if (item != null && inventory.CanAddItem(item))
+        if (item != null && Inventory.CanAddItem(item))
         {
             openItemContainer.RemoveItem(item);
-            inventory.AddItem(item);
+            Inventory.AddItem(item);
         }
     }
 
@@ -265,8 +265,8 @@ public class Character : MonoBehaviour
     {
         openItemContainer = itemContainer;
 
-        inventory.OnRightClickEvent -= InventoryRightClick;
-        inventory.OnRightClickEvent += TransferToItemContainer;
+        Inventory.OnRightClickEvent -= InventoryRightClick;
+        Inventory.OnRightClickEvent += TransferToItemContainer;
 
         itemContainer.OnRightClickEvent += TransferToInventory;
 
@@ -282,8 +282,8 @@ public class Character : MonoBehaviour
     {
         openItemContainer = null;
 
-        inventory.OnRightClickEvent += InventoryRightClick;
-        inventory.OnRightClickEvent -= TransferToItemContainer;
+        Inventory.OnRightClickEvent += InventoryRightClick;
+        Inventory.OnRightClickEvent -= TransferToItemContainer;
 
         itemContainer.OnRightClickEvent -= TransferToInventory;
 
