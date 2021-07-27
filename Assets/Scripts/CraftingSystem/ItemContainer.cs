@@ -29,13 +29,13 @@ public abstract class ItemContainer : MonoBehaviour, IItemContainer
     {
         for (int i = 0; i < ItemSlots.Count; i++)
         {
-            ItemSlots[i].OnPointerEnterEvent += slot => OnPointerEnterEvent(slot);
-            ItemSlots[i].OnPointerExitEvent += slot => OnPointerExitEvent(slot);
-            ItemSlots[i].OnRightClickEvent += slot => OnRightClickEvent(slot);
-            ItemSlots[i].OnBeginDragEvent += slot => OnBeginDragEvent(slot);
-            ItemSlots[i].OnEndDragEvent += slot => OnEndDragEvent(slot);
-            ItemSlots[i].OnDragEvent += slot => OnDragEvent(slot);
-            ItemSlots[i].OnDropEvent += slot => OnDropEvent(slot);
+            ItemSlots[i].OnPointerEnterEvent += slot => OnPointerEnterEvent?.Invoke(slot);
+            ItemSlots[i].OnPointerExitEvent += slot => OnPointerExitEvent?.Invoke(slot);
+            ItemSlots[i].OnRightClickEvent += slot => OnRightClickEvent?.Invoke(slot);
+            ItemSlots[i].OnBeginDragEvent += slot => OnBeginDragEvent?.Invoke(slot);
+            ItemSlots[i].OnEndDragEvent += slot => OnEndDragEvent?.Invoke(slot);
+            ItemSlots[i].OnDragEvent += slot => OnDragEvent?.Invoke(slot);
+            ItemSlots[i].OnDropEvent += slot => OnDropEvent?.Invoke(slot);
             // add listener to when the ItemSlot scripts event is sent
         }
     }

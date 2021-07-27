@@ -18,13 +18,13 @@ public class EquipmentPanel : MonoBehaviour
     {
         for (int i = 0; i < EquipmentSlots.Length; i++)
         {
-            EquipmentSlots[i].OnPointerEnterEvent += slot => OnPointerEnterEvent(slot);
-            EquipmentSlots[i].OnPointerExitEvent += slot => OnPointerExitEvent(slot);
-            EquipmentSlots[i].OnRightClickEvent += slot => OnRightClickEvent(slot);
-            EquipmentSlots[i].OnBeginDragEvent += slot => OnBeginDragEvent(slot);
-            EquipmentSlots[i].OnEndDragEvent += slot => OnEndDragEvent(slot);
-            EquipmentSlots[i].OnDragEvent += slot => OnDragEvent(slot);
-            EquipmentSlots[i].OnDropEvent += slot => OnDropEvent(slot);
+            EquipmentSlots[i].OnPointerEnterEvent += slot => OnPointerEnterEvent?.Invoke(slot);
+            EquipmentSlots[i].OnPointerExitEvent += slot => OnPointerExitEvent?.Invoke(slot);
+            EquipmentSlots[i].OnRightClickEvent += slot => OnRightClickEvent?.Invoke(slot);
+            EquipmentSlots[i].OnBeginDragEvent += slot => OnBeginDragEvent?.Invoke(slot);
+            EquipmentSlots[i].OnEndDragEvent += slot => OnEndDragEvent?.Invoke(slot);
+            EquipmentSlots[i].OnDragEvent += slot => OnDragEvent?.Invoke(slot);
+            EquipmentSlots[i].OnDropEvent += slot => OnDropEvent?.Invoke(slot);
         }
     }
 
